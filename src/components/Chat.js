@@ -20,7 +20,9 @@ const Chat = () => {
             .collection('messages').
             orderBy('timestamp', 'asc'));
     useEffect(() => {
-        chatRef?.current?.scrollIntoView();
+        chatRef?.current?.scrollIntoView({
+            behavior: 'smooth'
+        });
     }, [roomId, loading]);
 
     return (
