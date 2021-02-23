@@ -13,17 +13,12 @@ const Chat = () => {
     const roomId = useSelector(selectRoomId);
     const [roomDetails] = useDocument(
         roomId && db.collection('rooms').doc(roomId));
-    const [roomMessages?.docs.map(doc=>(
-
-    ))] = useCollection(
+    const [roomMessages] = useCollection(
         roomId && db.collection('rooms')
             .doc(roomId)
             .collection('messages').
             orderBy('timestamp', 'asc'));
-    console.log(roomDetails?.data());
-    console.log(roomMessages?.docs.map(doc=>(
-
-    )));
+    
     return (
         <ChatContainer>
             <>
@@ -40,18 +35,18 @@ const Chat = () => {
                     </HeaderRight>
                 </Header>
                 <ChatMessages>
-                    {roomMessages?.docs.map(doc=>{
-                        const {message, timestamp, user, userImage} = doc.data();
+                    {roomMessages?.docs.map(doc => {
+                        const { message, timestamp, user, userImage } = doc.data();
                         return (
                             <Message
-                            key={doc.id}
-                            message={message}
-                            timestamp={timestamp}
-                            user={user}
-                            userImage={userImage}
+                                key={doc.id}
+                                message={message}
+                                timestamp={timestamp}
+                                user={user}
+                                userImage={userImage}
                             />
                         )
-                        })}
+                    })}
                 </ChatMessages>
                 <ChatInput
                     channelName={roomDetails?.data().name}
