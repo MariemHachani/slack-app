@@ -14,19 +14,21 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const Sidebar = () => {
     const [channels, loading, error] = useCollection(db.collection('rooms'));
+    const [user] = useAuthState(auth);
 
     return (
         <SidebarContainer>
             <SidebarHeader>
                 <SidebarInfo>
-                    <h2>PAPA Fam</h2>
+                    <h2>Disscussion App</h2>
                     <h3>
                         <FiberManualRecordIcon />
-                        Mariem Hachani
+                        {user?.displayName}
                     </h3>
                 </SidebarInfo>
                 <CreateIcon />
@@ -47,7 +49,7 @@ const Sidebar = () => {
             { channels?.docs.map(doc => (
                 <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
 
-            )) }
+            ))}
         </SidebarContainer>
     )
 }
